@@ -1,18 +1,42 @@
 package it.unibo.mvc;
 
 import java.io.File;
-import java.util.Random;
-
-import javax.swing.JFrame;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * Application controller. Performs the I/O.
  */
 public class Controller {
- private static final String PATH = System.getProperty("user.home")
+    private static final String PATH = System.getProperty("user.home")
             + File.separator
-            + Controller.class.getSimpleName() + ".txt";
-    private static final int PROPORTION = 5;
-    private final Random randomGenerator = new Random();
-    private final JFrame frame = new JFrame(TITLE);
+            + "output.txt";
+    private File file = new File(PATH);
+
+    // Constructor
+    public Controller(File file) {
+        this.file = file;
+    }
+    public Controller() {
+    }
+    public void setFile(File file) {
+        this.file = file;
+    }
+    public File getFile() {
+        return this.file;
+    }
+    public Path getPath() {
+        return this.file.toPath();
+    }
+    //Return the file path as a string
+    public String getStringPath() {
+        return String.valueOf(this.getPath());
+    }
+    public void writeFile(String content) {
+        try {
+            Files.writeString(this.getPath(), content);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
